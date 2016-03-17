@@ -2,13 +2,14 @@ require 'fog'
 require 'commander'
 require 'rack2aws/config'
 require 'rack2aws/version'
+require 'rack2aws/processor_count'
 
 
 module Rack2Aws
-  class FileCopy
+  class FileManager
     include Rack2Aws::Configuration
 
-    attr_reader :per_page, :rackspace, :aws, :rackspace_directory, :aws_directory, :verbose_mode, :files, :total
+    attr_reader :per_page, :rackspace, :aws, :rackspace_directory, :aws_directory, :nproc, :verbose_mode, :files, :total
 
     def initialize(options={})
       options = default_options.merge(options)
@@ -18,6 +19,7 @@ module Rack2Aws
 
       @rackspace_directory = rackspace.directories.get(options[:rackspace_container])
       @aws_directory = aws.directories.get(options[:aws_bucket])
+      @nproc = options[:nproc]
       @verbose_mode = options[:verbose]
       @files = []
       @total = 0
@@ -57,15 +59,15 @@ module Rack2Aws
     def copy_files(page, files)
       puts "  [#{Process.pid}] Page #{page+1}: Copying #{files.size} files..." if verbose_mode
       total = files.size
-      max_processes = 4
       process_pids = {}
       time = Time.now
 
       while !files.empty? or !process_pids.empty?
-        while process_pids.size < max_processes and files.any? do
+        while process_pids.size < nproc and files.any? do
           file = files.pop
           pid = Process.fork do
             copy_file(file)
+            exit!(0)
           end
           process_pids[pid] = { :file => file }
         end
@@ -92,6 +94,7 @@ module Rack2Aws
 
   class CLI
     include Commander::Methods
+    include Rack2Aws::ProcessorCount
 
     def run
       program :name, 'rack2aws'
@@ -107,6 +110,7 @@ module Rack2Aws
 
         cmd.option '--container CONTAINER_NAME', String, 'Rackspace Cloud Files container name'
         cmd.option '--bucket BUCKET_NAME', String, 'AWS S3 bucket name'
+        cmd.option '--nproc NUM_PROC', Integer, 'Number of processes to fork'
         cmd.action do |args, options|
           if options.container.nil?
             options.container = ask('Rackspace Cloud Files container: ')
@@ -116,9 +120,14 @@ module Rack2Aws
             options.bucket = ask('AWS S3 bucket: ')
           end
 
-          FileCopy.new({
+          if options.nproc.nil?
+            options.nproc = processor_count()
+          end
+
+          FileManager.new({
                          :rackspace_container => options.container,
                          :aws_bucket => options.bucket,
+                         :nproc => options.nproc,
                          :verbose => $verbose
                        }).copy
         end

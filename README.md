@@ -12,6 +12,8 @@ To install it, just run:
 
 It will install `rack2aws` executable in your `.gem/ruby/x.x.x/bin` folder.
 
+**NOTE** Make sure you have `$HOME/.rack/config` and `$HOME/.aws/credentials` files in your `$HOME` directory.
+
 ## Usage
 
 To port all your files:
@@ -19,6 +21,8 @@ To port all your files:
 ```
     $ rack2aws port --container="CONTAINER_NAME" --bucket="BUCKET_NAME"
 ```
+
+Use `--nproc NUM_PROC` to specify the number of processes to fork while porting your files. It defaults to the number of CPU cores.
 
 Use `--verbose` to see what's being done.
 
