@@ -21,12 +21,13 @@ module Rack2Aws
       @aws_directory = aws.directories.get(options[:aws_bucket])
       @nproc = options[:nproc]
       @verbose_mode = options[:verbose]
+      @upload_public = options[:public]
       @files = []
       @total = 0
     end
 
     def default_options
-      { :per_page => 10000 }
+      { :per_page => 10000, public: false }
     end
 
     def copy
@@ -86,7 +87,7 @@ module Rack2Aws
       aws_directory.files.create(:key          => file.key,
                                  :body         => file.body,
                                  :content_type => file,
-                                 :public       => false)
+                                 :public       => @upload_public)
     end
 
     private :copy_files, :copy_file
@@ -111,6 +112,7 @@ module Rack2Aws
         cmd.option '--container CONTAINER_NAME', String, 'Rackspace Cloud Files container name'
         cmd.option '--bucket BUCKET_NAME', String, 'AWS S3 bucket name'
         cmd.option '--nproc NUM_PROC', Integer, 'Number of processes to fork'
+        cmd.option '--public', 'Whether files should be uploaded as public'
         cmd.action do |args, options|
           if options.container.nil?
             options.container = ask('Rackspace Cloud Files container: ')
@@ -120,6 +122,8 @@ module Rack2Aws
             options.bucket = ask('AWS S3 bucket: ')
           end
 
+          options.public = !options.public.nil?
+
           if options.nproc.nil?
             options.nproc = processor_count()
           end
@@ -128,7 +132,8 @@ module Rack2Aws
                          :rackspace_container => options.container,
                          :aws_bucket => options.bucket,
                          :nproc => options.nproc,
-                         :verbose => $verbose
+                         :verbose => $verbose,
+                         :public => options.public
                        }).copy
         end
       end

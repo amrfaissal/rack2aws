@@ -24,6 +24,8 @@ To port all your files:
 
 Use `--nproc NUM_PROC` to specify the number of processes to fork while porting your files. It defaults to the number of CPU cores.
 
+Use `--public` to upload files publicly.
+
 Use `--verbose` to see what's being done.
 
 Use `--help` to display help documentation.
