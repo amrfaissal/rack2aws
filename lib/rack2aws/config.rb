@@ -1,7 +1,6 @@
 require 'rack2aws/props_reader'
 require 'rack2aws/errors'
 
-
 # Class to parse configuration files in the format of "param = value".
 class KVConfigParser
   attr_accessor :config_file, :params, :groups
@@ -149,13 +148,13 @@ module Rack2Aws
 
     class RackspaceConfig
       def self.load()
-        config_path = "#{ENV['HOME']}/.rack/config"
+        @config_path ||= "#{ENV['HOME']}/.rack/config"
 
-        if !File.exist?(config_path)
+        if !File.exist?(@config_path)
           raise FileNotFoundError, "Rackspace configuration file not found"
         end
 
-        props_reader = PropertiesReader.new(config_path)
+        props_reader = PropertiesReader.new(@config_path)
         return {
           :provider => 'Rackspace',
           :rackspace_api_key => props_reader.get("api-key"),
@@ -167,13 +166,13 @@ module Rack2Aws
 
     class AWSConfig
       def self.load()
-        config_path = "#{ENV['HOME']}/.aws/credentials"
+        @config_path ||= "#{ENV['HOME']}/.aws/credentials"
 
-        if !File.exist?(config_path)
-          raise FileNotFoundError, "Rackspace configuration file not found".bold.red
+        if !File.exist?(@config_path)
+          raise FileNotFoundError, "AWS configuration file not found"
         end
 
-        credentials = KVConfigParser.new(config_path)
+        credentials = KVConfigParser.new(@config_path)
         return {
           :provider => 'AWS',
           :region => credentials['default']['region'],

@@ -1,33 +1,34 @@
 require 'fog'
 require 'commander'
 require 'rack2aws/config'
+require 'rack2aws/logger'
 require 'rack2aws/version'
 require 'rack2aws/processor_count'
-
 
 module Rack2Aws
   class FileManager
     include Rack2Aws::Configuration
 
-    attr_reader :per_page, :rackspace, :aws, :rackspace_directory, :aws_directory, :nproc, :verbose_mode, :files, :total
+    attr_reader :per_page, :rackspace, :aws,
+                :rackspace_directory, :aws_directory, :nproc,
+                :verbose_mode, :files, :total, :allow_public
 
     def initialize(options={})
       options = default_options.merge(options)
       @per_page = options[:per_page]
       @rackspace = Fog::Storage.new(RackspaceConfig.load())
       @aws = Fog::Storage.new(AWSConfig.load())
-
-      @rackspace_directory = rackspace.directories.get(options[:rackspace_container])
-      @aws_directory = aws.directories.get(options[:aws_bucket])
+      @rackspace_directory = rackspace.directories.get(options[:container])
+      @aws_directory = aws.directories.get(options[:bucket])
       @nproc = options[:nproc]
+      @allow_public = options[:public]
       @verbose_mode = options[:verbose]
-      @upload_public = options[:public]
       @files = []
       @total = 0
     end
 
     def default_options
-      { :per_page => 10000, public: false }
+      { :per_page => 10000, :public => false, :verbose => false }
     end
 
     def copy
@@ -87,21 +88,25 @@ module Rack2Aws
       aws_directory.files.create(:key          => file.key,
                                  :body         => file.body,
                                  :content_type => file,
-                                 :public       => @upload_public)
+                                 :public       => allow_public)
     end
 
     private :copy_files, :copy_file
   end
 
   class CLI
+    include Rack2Aws::Logger
     include Commander::Methods
     include Rack2Aws::ProcessorCount
 
     def run
       program :name, 'rack2aws'
       program :version, Rack2Aws::VERSION
-      program :description, 'Bridge from Rackspace Cloud Files to AWS S3'
+      program :description, 'Teleport your files from Rackspace Cloud Files to AWS S3'
       program :help, 'Author', 'Faissal Elamraoui <amr.faissal@gmail.com>'
+
+      # Show welcome message
+      show_welcome()
 
       global_option('--verbose', 'Explain what is being done') { $verbose = true }
 
@@ -122,19 +127,24 @@ module Rack2Aws
             options.bucket = ask('AWS S3 bucket: ')
           end
 
-          options.public = !options.public.nil?
-
           if options.nproc.nil?
             options.nproc = processor_count()
           end
 
-          FileManager.new({
-                         :rackspace_container => options.container,
-                         :aws_bucket => options.bucket,
-                         :nproc => options.nproc,
-                         :verbose => $verbose,
-                         :public => options.public
-                       }).copy
+          if !options.public.nil?
+            options.public = if agree(warn("Are you sure you want your files uploaded as public?"))
+                               true
+                             else
+                               nil
+                             end
+          end
+
+          options.verbose = !options.verbose.nil? ? true : nil
+
+          # Remove all nil values from options' __hash__ table
+          options.__hash__.delete_if{ |k,v| v.nil? }
+
+          FileManager.new(options.__hash__).copy
         end
       end
       run!
