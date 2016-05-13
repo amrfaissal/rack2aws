@@ -25,7 +25,7 @@ describe AWSConfig do
 
   describe "#load" do
     before {
-      AWSConfig.instance_variable_set(:@config_path, "#{Dir.getwd}/spec/credentials")
+      AWSConfig.instance_variable_set(:@config_path, File.expand_path('spec/credentials'))
     }
 
     it "returns AWS configuration hash" do

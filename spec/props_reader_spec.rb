@@ -2,11 +2,11 @@ require 'rack2aws/props_reader'
 
 describe PropertiesReader do
 
-  subject { PropertiesReader.new(Dir.getwd + '/spec/config') }
+  subject { PropertiesReader.new(File.expand_path('spec/config')) }
 
   describe '#to_s' do
     it 'returns string representation of the configuration file' do
-      expect( subject.to_s ).to eql("File Name /home/faissal/Projects/rack2aws/spec/config \nregion=  ORD \nusername=  your_username \napi-key=  your_api_key \n")
+      expect( subject.to_s ).to eql("File Name #{File.expand_path('spec/config')} \nregion=  ORD \nusername=  your_username \napi-key=  your_api_key \n")
     end
   end
 
