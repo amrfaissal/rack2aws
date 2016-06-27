@@ -87,7 +87,7 @@ module Rack2Aws
     def copy_file(file)
       aws_directory.files.create(:key          => file.key,
                                  :body         => file.body,
-                                 :content_type => file,
+                                 :content_type => file.content_type,
                                  :public       => allow_public)
     end
 
