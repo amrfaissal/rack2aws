@@ -1,4 +1,12 @@
-# rack2aws [![Build Status](https://travis-ci.org/amrfaissal/rack2aws.svg?branch=master)](https://travis-ci.org/amrfaissal/rack2aws) [![Gem Version](https://badge.fury.io/rb/rack2aws.svg)](https://badge.fury.io/rb/rack2aws)
+<div align="center">
+    <h1>rack2aws</h1>
+    <img src="https://raw.githubusercontent.com/amrfaissal/rack2aws/gh-pages/images/teleportation.png" />
+    <h3>Teleport your files from Rackspace Cloud Files&trade; to AWS S3</h3>
+</div>
+
+[![ Build Status ](https://travis-ci.org/amrfaissal/rack2aws.svg?branch=master)](https://travis-ci.org/amrfaissal/rack2aws) [![Gem Version](https://badge.fury.io/rb/rack2aws.svg)](https://badge.fury.io/rb/rack2aws)
+
+---
 
 `rack2aws` is a command-line tool that helps you port all your files from Rackspace Cloud Files&trade; to AWS S3.
 
@@ -32,7 +40,7 @@ Use `--help` to display help documentation.
 
 ## Contributing
 
-Bug reports and pull requests are welcome. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org/) code of conduct.
+Bug reports, Pull requests and Stars are always welcome. For bugs and feature requests, [please create an issue](https://github.com/amrfaissal/rack2aws/issues/new).
 
 ## License
 
