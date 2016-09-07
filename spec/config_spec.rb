@@ -3,8 +3,7 @@ require 'rack2aws/config'
 include Rack2Aws::Configuration
 
 describe RackspaceConfig do
-
-  describe "#load" do
+  describe ".load" do
     before {
       RackspaceConfig.instance_variable_set(:@config_path, "#{Dir.getwd}/spec/config")
     }
@@ -18,12 +17,10 @@ describe RackspaceConfig do
                                             })
     end
   end
-
 end
 
 describe AWSConfig do
-
-  describe "#load" do
+  describe ".load" do
     before {
       AWSConfig.instance_variable_set(:@config_path, File.expand_path('spec/credentials'))
     }
@@ -37,5 +34,4 @@ describe AWSConfig do
                                       })
     end
   end
-
 end

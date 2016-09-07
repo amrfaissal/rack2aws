@@ -147,7 +147,7 @@ module Rack2Aws
   module Configuration
 
     class RackspaceConfig
-      def self.load()
+      def self.load
         @config_path ||= "#{ENV['HOME']}/.rack/config"
 
         if !File.exist?(@config_path)
@@ -165,7 +165,7 @@ module Rack2Aws
     end
 
     class AWSConfig
-      def self.load()
+      def self.load
         @config_path ||= "#{ENV['HOME']}/.aws/credentials"
 
         if !File.exist?(@config_path)
