@@ -21,8 +21,8 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "commander", "~> 4.4", ">= 4.4.0"
   spec.add_runtime_dependency "fog", "~> 1.37", ">= 1.37.0"
   spec.add_runtime_dependency "artii", "~> 2.1", ">= 2.1.1"
-  spec.add_runtime_dependency "mime-types", "<= 2.99.1"
+  spec.add_runtime_dependency "mime-types", "<= 3.1"
   spec.add_development_dependency "bundler", "~> 1.11"
-  spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "rake", "~> 11.2.2"
   spec.add_development_dependency "rspec", "~> 3.4"
 end
