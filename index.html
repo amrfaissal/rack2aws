@@ -1,36 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <meta charset="UTF-8">
+    <title>Rack2Aws by amrfaissal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
-    <title>Rack2Aws by amrfaissal</title>
   </head>
-
   <body>
-    <header>
-      <div class="inner">
-        <h1>Rack2Aws</h1>
-        <h2>Teleport your files from Rackspace Cloud Files(tm) to AWS S3</h2>
-        <a href="https://github.com/amrfaissal/rack2aws" class="button"><small>View project on</small> GitHub</a>
-      </div>
-    </header>
+    <section class="page-header">
+      <h1 class="project-name">Rack2Aws</h1>
+      <h2 class="project-tagline">Teleport your files from Rackspace Cloud Files(tm) to AWS S3</h2>
+      <a href="https://github.com/amrfaissal/rack2aws" class="btn">View on GitHub</a>
+      <a href="https://github.com/amrfaissal/rack2aws/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/amrfaissal/rack2aws/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <h1>
-<a id="rack2aws--" class="anchor" href="#rack2aws--" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>rack2aws <a href="https://travis-ci.org/amrfaissal/rack2aws"><img src="https://travis-ci.org/amrfaissal/rack2aws.svg?branch=master" alt="Build Status"></a> <a href="https://badge.fury.io/rb/rack2aws"><img src="https://badge.fury.io/rb/rack2aws.svg" alt="Gem Version"></a>
-</h1>
+    <section class="main-content">
+      <div align="center">
+    <h1>
+<a id="rack2aws" class="anchor" href="#rack2aws" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>rack2aws</h1>
+    <img src="https://raw.githubusercontent.com/amrfaissal/rack2aws/gh-pages/images/teleportation.png">
+    <h3>
+<a id="teleport-your-files-from-rackspace-cloud-files-to-aws-s3" class="anchor" href="#teleport-your-files-from-rackspace-cloud-files-to-aws-s3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Teleport your files from Rackspace Cloud Files™ to AWS S3</h3>
+</div>
+
+<p><a href="https://travis-ci.org/amrfaissal/rack2aws"><img src="https://travis-ci.org/amrfaissal/rack2aws.svg?branch=master" alt=" Build Status "></a>
+<a href="https://gemnasium.com/github.com/amrfaissal/rack2aws"><img src="https://gemnasium.com/badges/github.com/amrfaissal/rack2aws.svg" alt="Dependency Status"></a>
+<a href="https://badge.fury.io/rb/rack2aws"><img src="https://badge.fury.io/rb/rack2aws.svg" alt="Gem Version"></a>
+<img src="http://ruby-gem-downloads-badge.herokuapp.com/rack2aws?type=total" alt=""></p>
+
+<hr>
 
 <p><code>rack2aws</code> is a command-line tool that helps you port all your files from Rackspace Cloud Files™ to AWS S3.</p>
 
@@ -39,20 +41,22 @@
 
 <p>To install it, just run:</p>
 
-<pre><code>    $ gem install rack2aws
-</code></pre>
+<div class="highlight highlight-source-shell"><pre>$ gem install rack2aws</pre></div>
 
 <p>It will install <code>rack2aws</code> executable in your <code>.gem/ruby/x.x.x/bin</code> folder.</p>
 
-<p><strong>NOTE</strong> Make sure you have <code>$HOME/.rack/config</code> and <code>$HOME/.aws/credentials</code> files in your <code>$HOME</code> directory.</p>
+<p><strong>NOTE</strong></p>
+
+<blockquote>
+<p>Make sure you have <code>$HOME/.rack/config</code> and <code>$HOME/.aws/credentials</code> files in your <code>$HOME</code> directory.</p>
+</blockquote>
 
 <h2>
 <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
 
 <p>To port all your files:</p>
 
-<pre><code>    $ rack2aws port --container="CONTAINER_NAME" --bucket="BUCKET_NAME"
-</code></pre>
+<div class="highlight highlight-source-shell"><pre>$ rack2aws port --container=<span class="pl-s"><span class="pl-pds">"</span>CONTAINER_NAME<span class="pl-pds">"</span></span> --bucket=<span class="pl-s"><span class="pl-pds">"</span>BUCKET_NAME<span class="pl-pds">"</span></span></pre></div>
 
 <p>Use <code>--nproc NUM_PROC</code> to specify the number of processes to fork while porting your files. It defaults to the number of CPU cores.</p>
 
@@ -65,30 +69,20 @@
 <h2>
 <a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contributing</h2>
 
-<p>Bug reports and pull requests are welcome. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the <a href="http://contributor-covenant.org/">Contributor Covenant</a> code of conduct.</p>
+<p>Bug reports, Pull requests and Stars are always welcome. For bugs and feature requests, <a href="https://github.com/amrfaissal/rack2aws/issues/new">please create an issue</a>.</p>
 
 <h2>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
 
 <p>The gem is available as open source under the terms of the <a href="http://opensource.org/licenses/MIT">MIT License</a>.</p>
-        </section>
 
-        <aside id="sidebar">
-          <a href="https://github.com/amrfaissal/rack2aws/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/amrfaissal/rack2aws/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/amrfaissal/rack2aws">Rack2Aws</a> is maintained by <a href="https://github.com/amrfaissal">amrfaissal</a>.</span>
 
-          <p class="repo-owner"><a href="https://github.com/amrfaissal/rack2aws"></a> is maintained by <a href="https://github.com/amrfaissal">amrfaissal</a>.</p>
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
 
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
-    </div>
+    </section>
 
   
   </body>
