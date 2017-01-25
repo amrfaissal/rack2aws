@@ -6,6 +6,7 @@
 
 [![ Build Status ](https://travis-ci.org/amrfaissal/rack2aws.svg?branch=master)](https://travis-ci.org/amrfaissal/rack2aws)
 [![Dependency Status](https://gemnasium.com/badges/github.com/amrfaissal/rack2aws.svg)](https://gemnasium.com/github.com/amrfaissal/rack2aws)
+[![Coverage Status](https://coveralls.io/repos/github/amrfaissal/rack2aws/badge.svg?branch=master)](https://coveralls.io/github/amrfaissal/rack2aws?branch=master)
 [![Gem Version](https://badge.fury.io/rb/rack2aws.svg)](https://badge.fury.io/rb/rack2aws)
 ![](http://ruby-gem-downloads-badge.herokuapp.com/rack2aws?type=total)
 
@@ -33,6 +34,8 @@ To port all your files:
 ```shell
 $ rack2aws port --container="CONTAINER_NAME" --bucket="BUCKET_NAME"
 ```
+
+### Supported Options
 
 Use `--nproc NUM_PROC` to specify the number of processes to fork while porting your files. It defaults to the number of CPU cores.
 
