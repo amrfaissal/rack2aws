@@ -25,10 +25,7 @@ class KVConfigParser
 
   # Validate the config file, and contents
   def validate_config()
-    unless File.readable?(self.config_file)
-      raise Errno::EACCES, "#{self.config_file} is not readable"
-    end
-    # FIX ME: need to validate contents/structure?
+    raise Errno::EACCES, "#{self.config_file} is not readable" unless File.readable?(self.config_file)
   end
 
   # Import data from the config to our config object.
@@ -79,18 +76,6 @@ class KVConfigParser
     }
   end
 
-  # This method will provide the value held by the object "@param"
-  # where "@param" is actually the name of the param in the config
-  # file.
-  #
-  # DEPRECATED - will be removed in future versions
-  #
-  def get_value(param)
-    puts "ParseConfig Deprecation Warning: get_value() is deprecated. Use " + \
-         "config['param'] or config['group']['param'] instead."
-    return self.params[param]
-  end
-
   # This method is a shortcut to accessing the @params variable
   def [](param)
     return self.params[param]
@@ -135,9 +120,7 @@ class KVConfigParser
   # Add parameters to a group. Parameters with the same name
   # could be placed in different groups
   def add_to_group(group, param_name, value)
-    if ! self.groups.include?(group)
-      self.add(group, {})
-    end
+    self.add(group, {}) unless self.groups.include?(group)
     self.params[group][param_name] = value
   end
 end
@@ -150,9 +133,7 @@ module Rack2Aws
       def self.load
         @config_path ||= "#{ENV['HOME']}/.rack/config"
 
-        if !File.exist?(@config_path)
-          raise FileNotFoundError, "Rackspace configuration file not found"
-        end
+        raise FileNotFoundError, "Rackspace configuration file not found" unless File.exist?(@config_path)
 
         props_reader = PropertiesReader.new(@config_path)
         return {
@@ -168,9 +149,7 @@ module Rack2Aws
       def self.load
         @config_path ||= "#{ENV['HOME']}/.aws/credentials"
 
-        if !File.exist?(@config_path)
-          raise FileNotFoundError, "AWS configuration file not found"
-        end
+        raise FileNotFoundError, "AWS configuration file not found" unless File.exist?(@config_path)
 
         credentials = KVConfigParser.new(@config_path)
         return {
